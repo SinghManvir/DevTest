@@ -45,7 +45,14 @@ namespace DeveloperTest.Controllers
 
             var customer = await _customerService.CreateCustomerAsync(model);
 
-            return Created($"customer/{customer}", customer);
+            return Created($"customer/{customer.CustomerId}", customer);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _customerService.DeleteCustomerAsync(id);
+            return NoContent();
         }
     }
 }

@@ -26,7 +26,10 @@ namespace DeveloperTest.Business
 
         public async Task<CustomerModel> GetCustomerAsync(int customerId)
         {
-            var customerDb = await _dbContext.Customers.SingleOrDefaultAsync(x => x.CustomerId == customerId);
+            var customerDb = await FindCustomer(customerId);
+            if (customerDb == null)
+                return null;
+
             return new CustomerModel(customerDb);
         }
 
@@ -43,11 +46,20 @@ namespace DeveloperTest.Business
             return new CustomerModel(newCustomer.Entity);
         }
 
-        public Task DeleteCustomerAsync(int customerId)
+        public async Task DeleteCustomerAsync(int customerId)
         {
-            return Task.FromResult(
-                _dbContext.Customers.Remove(new Customer {CustomerId = customerId})
-            );
+            var customerDb = await FindCustomer(customerId);
+            if (customerDb == null)
+                return;
+
+            _dbContext.Customers.Remove(customerDb);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        private async Task<Customer> FindCustomer(int customerId)
+        {
+            var customerDb = await _dbContext.Customers.SingleOrDefaultAsync(x => x.CustomerId == customerId);
+            return customerDb;
         }
     }
 }
