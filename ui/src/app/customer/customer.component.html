@@ -1,0 +1,19 @@
+<h2>New customer form</h2>
+<form [formGroup]="customerForm" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+  <label for="customerName">Name</label>
+  <input type="text" name="customerName" [formControl]="customerName" placeholder="Customer Name" />
+  <small *ngIf="customerName.hasError('required') && customerName.touched">
+    Please enter a name
+  </small>
+  <small *ngIf="customerName.hasError('minlength') && customerName.touched">
+    Please enter at least 5 characters
+  </small>
+  <label for="customerType">Type</label>
+  <select name="customerType" [formControl]="customerType" placeholder="Please select">
+    <option [ngValue]="undefined" selected>Please select</option>
+    <option *ngFor="let type of customerTypes" [innerHtml]="type.name"></option>
+  </select>
+  <button type="submit" [disabled]="customerForm.invalid">Add Customer</button>
+</form>
+
+<app-customer-list></app-customer-list>

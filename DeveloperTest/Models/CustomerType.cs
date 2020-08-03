@@ -2,7 +2,7 @@
 {
     public enum CustomerType
     {
-        Large, 
-        Small
+        Large = 1, 
+        Small = 2
     }
 }

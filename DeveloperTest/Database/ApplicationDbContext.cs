@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using DeveloperTest.Database.Models;
+using DeveloperTest.Models;
 
 namespace DeveloperTest.Database
 {
@@ -26,16 +27,29 @@ namespace DeveloperTest.Database
                 .Property(x => x.JobId)
                 .ValueGeneratedOnAdd();
 
+            modelBuilder.Entity<Customer>()
+                .HasData(new Customer
+                {
+                    CustomerId = 1,
+                    Name = "Test",
+                    Type = CustomerType.Large
+                });
+
+            modelBuilder.Entity<Job>().Property(x => x.CustomerId).IsRequired();
+
             modelBuilder.Entity<Job>()
                 .HasData(new Job
                 {
                     JobId = 1,
+                    CustomerId = 1,
                     Engineer = "Test",
                     When = DateTime.Now
                 });
 
+
+
             modelBuilder.Entity<Customer>().HasKey(x => x.CustomerId);
-            
+
             modelBuilder.Entity<Customer>().Property(x => x.CustomerId).UseIdentityColumn();
 
             modelBuilder.Entity<Customer>().Property(x => x.Name).IsRequired();

@@ -21,7 +21,7 @@ namespace DeveloperTest.Business
 
         public async Task<IEnumerable<CustomerModel>> GetCustomersAsync()
         {
-            return await _dbContext.Customers.Select(x => new CustomerModel(x)).ToListAsync();
+            return await _dbContext.Customers.Include(x => x.Jobs).Select(x => new CustomerModel(x)).ToListAsync();
         }
 
         public async Task<CustomerModel> GetCustomerAsync(int customerId)
@@ -58,7 +58,8 @@ namespace DeveloperTest.Business
 
         private async Task<Customer> FindCustomer(int customerId)
         {
-            var customerDb = await _dbContext.Customers.SingleOrDefaultAsync(x => x.CustomerId == customerId);
+            var customerDb = await _dbContext.Customers.Include(x => x.Jobs)
+                .SingleOrDefaultAsync(x => x.CustomerId == customerId);
             return customerDb;
         }
     }

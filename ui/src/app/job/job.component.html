@@ -5,7 +5,12 @@
     <option [ngValue]="undefined" selected>Please select</option>
     <option *ngFor="let engineer of engineers">{{engineer}}</option>
   </select>
-  <small *ngIf="engineer.invalid">Please select an engineer</small>
+  <label for="customer">Customer</label>
+  <select name="customer" required #customer="ngModel" ngModel placeholder="Please select" [(ngModel)]="newJob.customer">
+    <option [ngValue]="undefined" selected>Please select</option>
+    <option *ngFor="let customer of customers" [ngValue]="customer">{{customer.name}} - {{customer.type}}</option>
+  </select>
+  <small *ngIf="customer.invalid">Please select a customer</small>
   <label for="when">When</label>
   <input type="date" name="when" ngModel required #when="ngModel" [(ngModel)]="newJob.when" />
   <small *ngIf="when.invalid">Please select a valid date</small>

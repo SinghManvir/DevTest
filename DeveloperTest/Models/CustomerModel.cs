@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using DeveloperTest.Database.Models;
 
 namespace DeveloperTest.Models
@@ -18,7 +19,12 @@ namespace DeveloperTest.Models
             CustomerId = customerDb.CustomerId;
             Name = customerDb.Name;
             Type = customerDb.Type;
-
+            Jobs = customerDb.Jobs?.Select(x => new JobModel
+            {
+                Engineer = x.Engineer,
+                JobId = x.JobId,
+                When = x.When
+            }).ToList();
         }
     }
 }

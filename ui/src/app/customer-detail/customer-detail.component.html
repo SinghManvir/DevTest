@@ -1,0 +1,17 @@
+<p>
+  <b>CustomerId:</b> 
+  <span [innerHtml]="customer.customerId"></span>
+</p>
+<p>
+  <b>Name:</b> 
+  <span [innerHtml]="customer.name"></span>
+</p>
+<p>
+  <b>Type:</b> 
+  <span [innerHtml]="customer.type"></span>
+</p>
+<p>
+  <b>Total Jobs:</b> 
+  <span [innerHtml]="customer.jobs?.length"></span>
+</p>
+<a [routerLink]="['/customers']">Back</a>
